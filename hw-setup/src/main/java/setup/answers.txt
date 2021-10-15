@@ -3,16 +3,18 @@
 
 1. Why did Fibonacci fail the testThrowsIllegalArgumentException< test? What (if anything) did
 you have to do to fix it? If you did not have to change anything to fix this issue, explain why.
-
+Fibonacci failed the testThrowsIllegalArgumentException< test because in the fibonacci.java we included 0 so
+ it Threw IllegalArgumentException for 0 but 0 is nonnegative. I changed n<=0 to n <0.
 
 
 2. Why did Fibonacci fail the testBaseCase test? What (if anything) did you have to do to fix
 it? If you did not have to change anything to fix this issue, explain why.
-
-
+Fibonacci failed the testBaseCase test because the basecase should be n <= 1 but it was n <= 2 in the code.
+I fixed it by changed n <= 2 tp n <=1.
 
 3.Why did Fibonacci fail the testInductiveCase test? What (if anything) did you have to do to
 fix it? If you did not have to change anything to fix this issue, explain why.
-
+Fibonacci failed the testInductiveCase test because it should be sum of getFibTerm(n-1)  and getFibTerm(n-1)
+I fixed it by changed subtract to sum.
 
 

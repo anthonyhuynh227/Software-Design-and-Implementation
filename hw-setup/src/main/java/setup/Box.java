@@ -12,7 +12,7 @@
 package setup;
 
 import java.lang.Iterable;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * This is a container can be used to contain Balls. The key
@@ -25,7 +25,7 @@ public class Box implements Iterable<Ball> {
      * ballContainer is used to internally store balls for this Box
      */
     private BallContainer ballContainer;
-
+    private double maxVolume;
     /**
      * Constructor that creates a new box.
      *
@@ -33,7 +33,8 @@ public class Box implements Iterable<Ball> {
      */
     public Box(double maxVolume) {
         // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        this.maxVolume = maxVolume;
+        this.ballContainer = new BallContainer();
     }
 
     /**
@@ -65,7 +66,11 @@ public class Box implements Iterable<Ball> {
      */
     public boolean add(Ball b) {
         // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        if (ballContainer.getVolume() >= maxVolume || ballContainer.contains(b)) {
+            return false;
+        }
+        ballContainer.add(b);
+        return true;
     }
 
     /**
@@ -78,7 +83,19 @@ public class Box implements Iterable<Ball> {
      */
     public Iterator<Ball> getBallsFromSmallest() {
         // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        List<Ball> list = new ArrayList<>();
+        Iterator<Ball> o = ballContainer.iterator();
+        while( o.hasNext()) {
+            list.add(o.next());
+        }
+        Collections.sort(list, new Comparator<Ball>() {
+            @Override
+            public int compare(Ball o1, Ball o2) {
+                return Double.compare(o1.getVolume() , o2.getVolume());
+            }
+        });
+        Iterator<Ball> result = list.iterator();
+        return result;
     }
 
     /**
