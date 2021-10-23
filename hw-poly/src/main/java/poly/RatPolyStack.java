@@ -70,7 +70,7 @@ public final class RatPolyStack implements Iterable<RatPoly> {
     	checkRep();
         int res = polys.size();
         checkRep();
-        return result;
+        return res;
     }
 
     /**

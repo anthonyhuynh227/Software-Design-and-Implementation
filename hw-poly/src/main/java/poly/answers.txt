@@ -1,20 +1,88 @@
 ## CSE 331 hw-poly Questions
 ## Part 0
 ###########################################################################
+Helper function: negate ( return the additive inverse of this RatPoly.
+p
+    for each term t_r in p
+        we replace t_r with the multiplication of t_r and -1.
+
+Helper function: pseudocode for polynomial addition:
+r = p + q:
+    set r = q by making a term-by-term copy of all terms in q to r
+    {Inv: r = q + p0 + p1 + ... + pi-1, where pj is the jth term in p}
+    foreach term, tp, in p:
+        if any term, tr, in r has the same degree as tp,
+        then replace tr in r with the sum of tp and tr
+        else insert tp into r as a new term
+Helper function: Find a term with max degree in a polynomial:
+p
+    set max term is the first term in p;
+    for each term t_r in r p:
+        if any term t_r has larger integer degree than max term;
+            update max term = t_r
 
 1. Multiplication Pseudocode
-
+r = a * b:
+    set r = an empty polynomial
+    for each term t_r in b:
+        set an empty polynomial B
+        for each term t_s in a:
+            set a term A = term t_r * term t_s
+            intern term  A into B
+        B + r by using helper polymonial addtion function.
 
 
 2. Division Pseudocode
-
-
+r = C/B:
+    set A = C by making a term-by-term copy of all terms in C to A
+    z = the max term of A
+    y = the max term of B
+        if ( degree of z < degree of y)
+            return 0
+    while ( degree of z >= degree of y)
+        set term n = term z / term y
+        insert term n into r
+        set a new polynomial I and add term n into I
+        P = multiply I with B
+        negate(P)
+        update A equal additional of A and negate(P)
+        update z with max term of A
 
 3. Division Example: (x3+x-1) / (x+1) = x2-x+2
-
-
-
-
+C = x^3 + x + 1
+B = x + 1
+A = copy of C = x^3 + x -1
+    z = x^3
+    y = x
+    if ( degree of z < degree of y), NO
+       return 0
+    whileloop:
+        First loop : (degree of z >= degree of y), YES
+            [set term n = term z / term y], n = x^2
+            [insert term n into r], r = x^2
+            [set a new polynomial I and add term n into I], I = x^2
+            [P = multiply I with B], P = x^3 + x^2
+            [negate(P)], P = -x^3 - x^2
+            [update A equal additional of A and negate(P)], A = -x^2 + x -1
+            [update z with max term of A], z = -x^2
+        Second loop: (degree of z >= degree of y), YES
+            [set term n = term z / term y], n = -x
+            [insert term n into r], r = x^2 - x
+            [set a new polynomial I and add term n into I], I = -x
+            [P = multiply I with B], P = -x^2 - x
+            [negate(P)], P = x^2 + x
+            [update A equal additional of A and negate(P)], A = 2x -1
+            [update z with max term of A], z = 2x
+        Third loop: (degree of z >= degree of y), YES
+            [set term n = term z / term y], n = 2
+            [insert term n into r], r = x^2 - x + 2
+            [set a new polynomial I and add term n into I], I = 2
+            [P = multiply I with B], P = 2x + 2
+            [negate(P)], P = -2x -2
+            [update A equal additional of A and negate(P)], A = -3
+            [update z with max term of A], z = -3
+        Loop stopped: z = -3 and y = x
+    We are done : r = x^2 - x + 2
 ## Part 1
 ###########################################################################
 
@@ -27,7 +95,9 @@
 
 
 3. Constructor checkReps
-
+We only put the checkRep at the end because at the end of construction, we will have a RatNum which is not
+violate the checkRep. We want to make sure all the RatNum have the same form. If we put the checkRep at the
+beginning, the 6/-9 would not be a valid but by the end -2/3 would be the valid input if we only call checkRep at the end.
 
 
 
@@ -35,7 +105,8 @@
 ###########################################################################
 
 1. Calls to checkRep in RatTerm
-
+I call to checkRep at the end because we can have an input with RatNum is ZERO and e > 0, then it will violate the
+checkRep. We can change the e during construction and it will not violate the checkRep.
 
 
 
@@ -43,6 +114,7 @@
 ###########################################################################
 
 1. Calls to checkRep in RatPoly
-
+I call checkRep at the end because we can have the ZERO RatTerms as an input. So we delete the ZERO term and
+should call checkRep at the end
 
 
