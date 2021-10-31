@@ -8,27 +8,45 @@
     ### IntQueue1
 
     Abstraction Function:
-
+    AF(this) = Queue<Integer> such that
+                Queue = entries[] if entries is empty
+                Queue = entries[a1, a2,..., a_k] otherwise
+                where a_k is n1 is the least-recently-added item
+                in the queue and is the next item to be removed
 
 
     Representation Invariant:
-
+    entries != null and entries contains no null
 
 
 
     ### IntQueue2
 
     Abstraction Function:
-
+    AF(this) = Queue<Integer> such that
+            queue = entries[] if size = 0
+            queue = entries[front... front+size-1] if front+size-1< entries.length
+            queue = entries[front...] + entries[0...size -(entries.length - front)-1] otherwise
 
 
     Representation Invariant:
+    entries != null, size >= 0,  0 <= front <= entries.length-1,
 
 
 
 
 2. Group the snapshots of IntQueue2's internal state into groups that have the same abstract state.
-
+    queue_a = [1, 2]
+    queue_b = [2, 3, 4]
+    queue_c = [1, 2, 3]
+    queue_d = [1, 2]
+    queue_e = [1, 2, 3, 4]
+    queue_f = [1, 2, 3]
+    queue_g = [1, 2]
+    queue_h = [2, 3, 4]
+    a, d and g are equivalent.
+    b and h are equivalent.
+    c and f are equivalent.
 
 
 
@@ -36,27 +54,34 @@
 could possibly expose the representation, given the information available. Explain any assumptions you made.
 
     a. `public int solveEquations(int x, int y, int z)`
-
+        This method doesn't have possibly exposure representation since this method
+        only takes and returns primitive data type.
 
 
     b. `public String[] decode(boolean slowly)`
-
+        This method doesn't have possibly exposure representation since return type is
+        String[] and array is mutable.
 
 
     c. `private Date myBirthday()`
-
+        This method doesn't have possibly exposure representation if Date is mutable
+        and the returned Date is not the copy of the original Date.
 
 
     d. `public String toString()`
-
+        This method doesn't have possibly exposure representation since the return
+        type String is immutable.
 
 
     e. `public Iterator<Integer> elements()`
-
+        This method doesn't have possibly exposure representation since the
+        client can remove the Integer in the collection while iterate through it.
 
 
     f. `public Deck(List<Card> cards)`
-
+        This method doesn't have possibly exposure representation since the client can
+        change cards afterwards to mess up Deck's rep invariant if the method doesn't make
+        a copy of the argument cards on the way in
 
 
 
@@ -67,7 +92,8 @@ Briefly explain why you included the operations you did and why you feel they ar
 interface to a graph. If your design includes multiple classes or interfaces, explain why you
 included each one; if not, explain whether you considered additional classes and why you decided
 not to include them.
-
+addNode and addEdge are needed in order to build a graph. containNode is needed to make sure that
+graph does not have duplicate Node. getEdge is needed to know whether 2 nodes have connection.
 
 
 
@@ -76,6 +102,7 @@ not to include them.
 
 What was your testing strategy for this assignment? How do your script tests and JUnit tests
 differ from each other (if they do), and why?
-
+I will use "0, 1,2" case analysis mentioned in hints section to come up with many combinations.
+Sorry that I don't have enough time to complete testing in this homework. I will include more tests in next part.
 
 

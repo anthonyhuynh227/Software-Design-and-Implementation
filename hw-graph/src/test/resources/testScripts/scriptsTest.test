@@ -1,0 +1,19 @@
+# Tests that a graph can be created, a pair of nodes and
+# an edge between them can be added, a single node can be added
+# list all the nodes of a graph, all child from a single node.
+
+# Create a graph
+CreateGraph A
+
+# Add a pair of nodes
+AddNode A n1
+AddNode A n2
+
+# Add an edge
+AddEdge A n1 n2 e1
+
+#List all nodes from a graph
+ListNodes A
+
+#List all children from a node
+ListChildren

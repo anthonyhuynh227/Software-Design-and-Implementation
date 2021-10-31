@@ -105,7 +105,7 @@ public final class RatPoly {
         // TODO: Fill in this method, then remove the RuntimeException
         terms = new ArrayList<RatTerm>();
         if (!rt.getCoeff().equals(RatNum.ZERO)) {
-            terms.add(new RatTerm(rt.getCoeff(), rt.getExpt()));
+            terms.add(rt);
         }
         checkRep();
     }
@@ -196,10 +196,14 @@ public final class RatPoly {
     private static void scaleCoeff(List<RatTerm> lst, RatNum scalar) {
         // TODO: Fill in this method as specified, modify it to your liking, or remove it.
         // Do not leave this method as-is. You must either use it somehow or remove it.
-        int size = lst.size();
-        for (int i = 0; i < size ; i++) {
-            RatTerm temp = new RatTerm(lst.get(i).getCoeff().mul(scalar), lst.get(i).getExpt());
-            lst.set(i,temp);
+        if (scalar.equals(RatNum.ZERO)) {
+            lst.clear();
+        } else {
+            int size = lst.size();
+            for (int i = 0; i < size; i++) {
+                RatTerm temp = new RatTerm(lst.get(i).getCoeff().mul(scalar), lst.get(i).getExpt());
+                lst.set(i, temp);
+            }
         }
     }
 
@@ -220,6 +224,16 @@ public final class RatPoly {
         for (int i = 0; i < lst.size() ; i++) {
             RatTerm temp = new RatTerm(lst.get(i).getCoeff(), lst.get(i).getExpt() + degree);
             lst.set(i,temp);
+            if (lst.get(i).getExpt() <0) {
+                lst.remove(i);
+                i--;
+            }
+        }
+        for (int i = 0; i < lst.size(); i++) {
+            if (lst.get(i).getExpt() < 0) {
+                lst.remove(i);
+                i--;
+            }
         }
     }
 
@@ -257,10 +271,18 @@ public final class RatPoly {
                 if (lst.get(i).getExpt() == newTerm.getExpt()) {
                     RatNum eco = lst.get(i).getCoeff();
                     lst.set(i, new RatTerm(eco.add(newTerm.getCoeff()), newTerm.getExpt()));
+                    break;
                 }
                 if (lst.get(i).getExpt() > newTerm.getExpt() && newTerm.getExpt() > lst.get(i + 1).getExpt()) {
                     lst.add(i + 1, newTerm);
+                    break;
                 }
+            }
+        }
+        for (int i = 0; i < lst.size(); i++) {
+            if (lst.get(i).isZero()) {
+                lst.remove(i);
+                i--;
             }
         }
     }
@@ -281,7 +303,13 @@ public final class RatPoly {
         checkRep();
         return res;
     }
-
+    /**
+     *
+     *
+     */
+    public List<RatTerm> getTerms() {
+        return this.terms;
+    }
     /**
      * Addition operation.
      *
@@ -295,11 +323,11 @@ public final class RatPoly {
         if (p.isNaN() || this.isNaN()) {
             return NaN;
         }
-        RatPoly r  = new RatPoly(terms);
-        for (int i = 0; i < p.terms.size(); i++) {
-            sortedInsert(r.terms, p.terms.get(i));
+        List<RatTerm> temp = p.getTerms();
+        for (RatTerm rt :terms) {
+            sortedInsert(temp, rt);
         }
-        return r;
+        return new RatPoly(temp);
     }
 
     /**
@@ -338,6 +366,7 @@ public final class RatPoly {
             RatPoly sub = new RatPoly(newTerms);
             result.add(sub);
         }
+        result.checkRep();
         return result;
     }
 
@@ -376,22 +405,32 @@ public final class RatPoly {
      */
     public RatPoly div(RatPoly p) {
         // TODO: Fill in this method, then remove the RuntimeException
-        if (p.isNaN() || this.isNaN() || p != ZERO) {
+        if (p.isNaN() || this.isNaN() || p.equals(ZERO)) {
             return NaN;
         }
-        RatPoly result = new RatPoly();
+        if ( this.equals(ZERO)) {
+            return ZERO;
+        }
         List<RatTerm> newTerms = new ArrayList<>();
         RatPoly remainder = new RatPoly(terms);
         int x = remainder.degree();
         int y = p.degree();
-        while (x > y) {
+        while (x >= y) {
             RatTerm n = remainder.getTerm(x).div(p.getTerm(y));
             newTerms.add(n);
             RatPoly sub = new RatPoly(n);
             remainder = remainder.sub(p.mul(sub));
             x = remainder.degree();
         }
-        return new RatPoly(newTerms);
+        for (int i = 0; i < newTerms.size(); i++) {
+            if (newTerms.get(i).isZero() || newTerms.get(i).getExpt() <0) {
+                newTerms.remove(i);
+                i--;
+            }
+        }
+        RatPoly result = new RatPoly(newTerms);
+        result.checkRep();
+        return result;
     }
 
     /**

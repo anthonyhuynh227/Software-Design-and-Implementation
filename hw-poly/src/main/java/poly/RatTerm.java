@@ -142,7 +142,7 @@ public final class RatTerm {
         if (this.isNaN()) {
             return Double.NaN;
         }
-        return (d*Math.pow(d,this.expt));
+        return (this.coeff.doubleValue()*Math.pow(d,this.expt));
     }
 
     /**
@@ -167,12 +167,12 @@ public final class RatTerm {
         // TODO: Fill in this method, then remove the RuntimeException
         if (this.isNaN() || arg.isNaN()) {
             return NaN;
-        } else if (this.expt != arg.expt) {
-            throw new IllegalArgumentException();
-        } else if (this.isZero()) {
-            return new RatTerm(arg.getCoeff(), arg.getExpt());
+        }  else if (this.isZero()) {
+            return new RatTerm(arg.coeff, arg.expt);
         } else if (arg.isZero()) {
             return new RatTerm(this.coeff, this.expt);
+        } else if (this.expt != arg.expt) {
+            throw new IllegalArgumentException();
         }
         return new RatTerm(this.coeff.add(arg.coeff), this.expt);
     }
