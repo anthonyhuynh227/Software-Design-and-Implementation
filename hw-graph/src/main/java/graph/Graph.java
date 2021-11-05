@@ -71,7 +71,7 @@ public class Graph {
      * @param src origin of edge
      * @param des destination of edge
      * @param  label of the edge
-     * @spec.requires node1 != null && node2 != null
+     * @spec.requires node1 != null and node2 != null
      * @return true if the edge can be added into src node.
      */
     public boolean addEdge(Node src, Node des, String label) {
@@ -81,7 +81,7 @@ public class Graph {
     /**
      * returns a list of Nodes that start from the node
      * @param node the origin of edge connect to other Nodes
-     * @spec.requires node != null & nodes contains node.
+     * @spec.requires node != null and nodes contains node.
      * @return returns a list of all Nodes that have their origin is this Node.
      */
     public ArrayList<Node> children (Node node) {
@@ -128,7 +128,7 @@ public class Graph {
 
     /**
      * Removes the specified edge in this graph and all the edges relates to this node if it is present.
-     * @spec.requires label != nul && node1 != null && node2 != null
+     * @spec.requires label != nul and node1 != null and node2 != null
      * removes an edge from node1 to node2 with lablel .
      * @param src the origin of the edge
      * @param des the destination of the edge
@@ -171,7 +171,7 @@ public class Graph {
 
         /**
          * Get the value of this Node
-         * @returns returns the value of this Node
+         * @return returns the value of this Node
          */
         public String getName() {
             return this.name;
@@ -179,7 +179,7 @@ public class Graph {
 
         /**
          * Get the list of edge with src from this node.
-         * @returns returns the list of edge
+         * @return returns the list of edge
          */
         public ArrayList<Edge> getEdges() {
             return this.edgeList;
@@ -187,6 +187,7 @@ public class Graph {
 
         /**
          * Adds an edge with src from this node
+         * @param edge need to be added
          * @spec.effects adds an edge with src from this node
          * @return true if the edge can be added and if it is not already present.
          */
@@ -201,7 +202,9 @@ public class Graph {
 
         /**
          * removes an edge from this node
+         * @param edge need to be removed
          * @spec.effects removes an edge from this node
+         * @return true iff edge can be removed from graph.
          */
         public boolean removeEdges(Edge edge) {
             if (edgeList.contains(edge)) {
@@ -263,7 +266,7 @@ public class Graph {
 
         /**
          * Get the destination node of this edge.
-         * @returns returns the destination node of this edge
+         * @return returns the destination node of this edge
          */
         public Node getDesNode() {
             return this.desNode;
@@ -271,7 +274,7 @@ public class Graph {
 
         /**
          * Get the label this edge.
-         * @returns returns the label this edge
+         * @return returns the label this edge
          */
         public String getLabel() {
             return this.label;
