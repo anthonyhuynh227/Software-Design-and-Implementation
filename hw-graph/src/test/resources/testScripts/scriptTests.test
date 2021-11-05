@@ -1,0 +1,24 @@
+#Testing file
+
+#Create graph
+CreateGraph A
+CreateGraph B
+CreateGraph C
+
+#Add nodes into graphs
+AddNode B b1
+AddNode C c1
+AddNode C c2
+
+#Add edges into graphs
+AddEdge C c1 c2 e1
+AddEdge C c2 c1 e2
+
+#Print all nodes in the graph
+ListNodes A
+ListNodes B
+ListNodes C
+
+#Print all child nodes of a node with outgoing edge
+ListChildren C c1
+ListChildren C c2

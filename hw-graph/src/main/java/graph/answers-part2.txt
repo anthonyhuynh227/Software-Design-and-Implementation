@@ -15,14 +15,19 @@ A few examples of possible Graph representations:
 1. In two or three sentences, explain an advantage and a disadvantage of each of the
 representations listed above (for example, in terms of runtime complexity, space
 complexity, or ease of implementation).
-
-
+A: Advantage is O(1) when add new Node or new Edge into graph, disadvantage is
+that we have 3 different class and make it difficult to implement.
+B: advantage is allowing us to compactly represent a sparse graph and easily to
+find all the links that are directly connected to a particular vertex. Disadvantage is no quicker way to determine
+whether an edge is present in the graph
+C: advantage is helpful where graph doesn't contain a large number of nodes. Disadvantage is large memory complexity.
 
 
 2. In two to three sentences, describe the representation you chose and explain why you
 chose it. If you chose to use a different representation than one of the three we described
 above, be sure to list its advantages and disadvantages, too.
-
+I chose to make it as collection of nodes and edges class because it is easier for me to add or remove
+a new method for each class. Easier for me to adjust class because modularity.
 
 
 
@@ -33,12 +38,14 @@ above, be sure to list its advantages and disadvantages, too.
 
 1. Describe any new tests you added and why you added them, or why you feel that your original
 tests alone are sufficient.
-
+I added deleteNode and deleteEdge tests because I just added removeNode and removedEdge method in Graph class.
 
 
 
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
 If yes, describe your changes and why you made them.
-
+At the beginning, I made three separate class: Graph, Node, and Edge. I changed it by put the Node and Edge as the
+inner class for Graph class. This would be more efficient because when we prefer to a Node or an Edge, it belong to
+a specified graph.
 
 

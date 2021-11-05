@@ -1,0 +1,24 @@
+#Testing file
+
+#Create graph
+created graph A
+created graph B
+created graph C
+
+#Add nodes into graphs
+added node b1 to B
+added node c1 to C
+added node c2 to C
+
+#Add edges into graphs
+added edge e1 from c1 to c2 in C
+added edge e2 from c2 to c1 in C
+
+#Print all nodes in the graph
+A contains:
+B contains: b1
+C contains: c1 c2
+
+#Print all child nodes of a node with outgoing edge
+the children of c1 in C are: c2(e1)
+the children of c2 in C are: c1(e2)
