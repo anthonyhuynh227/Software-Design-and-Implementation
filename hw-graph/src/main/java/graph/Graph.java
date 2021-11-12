@@ -59,7 +59,7 @@ public class Graph {
     /**
      * Check whether the specified node contained in this graph.
      * @spec.requires node != null
-     * @param node the other node to be added.
+     * @param node need to be checked.
      * @return returns whether this graph contains a specified node.
      */
     public boolean containNode(Node node) {

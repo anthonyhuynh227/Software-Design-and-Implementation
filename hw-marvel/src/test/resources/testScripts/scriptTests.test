@@ -1,0 +1,54 @@
+#Simple tests for a graph
+
+#create graphs
+CreateGraph A
+CreateGraph B
+CreateGraph C
+
+#Add nodes into graphs
+AddNode A a1
+AddNode B b1
+AddNode B b2
+AddNode C c1
+AddNode C c2
+AddNode C c3
+
+#Add edges to graphs
+AddEdge B b1 b2 b12
+AddEdge B b2 b1 b21
+AddEdge C c1 c2 c12
+AddEdge C c2 c3 c23
+AddEdge C c1 c3 c13
+
+#Print all nodes in the graph
+ListNodes A
+ListNodes B
+ListNodes C
+
+#Print all the child nodes with outgoing edge
+ListChildren A a1
+ListChildren B b1
+ListChildren B b2
+ListChildren C c1
+ListChildren C c2
+ListChildren C c3
+
+#Test one node is not in graph
+FindPath A a1 a2
+
+#Test two nodes are not in graph
+FindPath A a2 a3
+
+#Test path exist in graph
+FindPath B b1 b2
+
+FindPath B b2 b1
+
+#Test path from a node to itself
+FindPath B b1 b1
+
+#Test no path in graph
+FindPath C c3 c1
+
+#Test shortest path
+FindPath C c1 c3

@@ -12,13 +12,14 @@
 package marvel;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Parser utility to load the Marvel Comics dataset.
  */
-public class MarvelParser {
+public class    MarvelParser {
 
     /**
      * Reads the Marvel Universe dataset. Each line of the input file contains a character name and a
@@ -26,15 +27,28 @@ public class MarvelParser {
      *
      * @spec.requires filename is a valid file in the resources/data folder.
      * @param filename the file that will be read
+     * @return the ArrayList contains data in csv file.
      */
     // TODO: Replace 'void' with the type you want the parser to produce
-    public static void parseData(String filename) {
+    public static ArrayList<ArrayList<String>> parseData(String filename) {
         List<String> lines = readLines(filename);
 
         // TODO: Complete this method
         // You'll need to:
         //  - Split each line into its individual parts
         //  - Collect the data into some convenient data structure(s) to return to the graph building code
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        for (var line : lines) {
+            ArrayList<String> newLine = new ArrayList<>();
+            StringBuilder newChar = new StringBuilder();
+            newChar.append(line.split(",")[0]);
+            newLine.add(newChar.toString());
+            StringBuilder newMovie = new StringBuilder();
+            newMovie.append(line.split(",")[1]);
+            newLine.add(newMovie.toString());
+            result.add(newLine);
+        }
+        return result;
     }
 
     /**

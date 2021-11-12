@@ -1,0 +1,28 @@
+#Test for a graph build on csv file with load graph
+
+#create graph
+LoadGraph CS-Student csStudent.csv
+
+#Print all nodes in graph
+ListNodes CS-Student
+
+#Print all child node with outgoing edge
+ListChildren CS-Student Jasmine
+
+#Test one node is not in graph
+FindPath CS-Student John Brian
+
+#Test two node are not in graph
+FindPath CS-Student Brian Lulu
+
+#Test path is not exist in graph
+FindPath CS-Student Jack Jackie
+
+#Test path from a node to itself
+FindPath CS-Student Jack Jack
+
+#Test shortest path
+FindPath CS-Student John Tom
+
+#Test shortest path with lexicographically path
+FindPath CS-Student John Jasmine

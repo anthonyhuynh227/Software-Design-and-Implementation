@@ -1,0 +1,34 @@
+#Test for a graph build on csv file with load graph
+
+#create graph
+loaded graph CS-Student
+
+#Print all nodes in graph
+CS-Student contains: Anthony Jack Jackie Jasmine John Tom
+
+#Print all child node with outgoing edge
+the children of Jasmine in CS-Student are: Anthony(CSE332) Jack(CSE332) Tom(CSE421)
+
+#Test one node is not in graph
+unknown: Brian
+
+#Test two node are not in graph
+unknown: Brian
+unknown: Lulu
+
+#Test path is not exist in graph
+path from Jack to Jackie:
+no path found
+
+#Test path from a node to itself
+path from Jack to Jack:
+
+#Test shortest path
+path from John to Tom:
+John to Jack via CSE253
+Jack to Tom via CSE550
+
+#Test shortest path with lexicographically path
+path from John to Jasmine:
+John to Anthony via CSE150
+Anthony to Jasmine via CSE332
