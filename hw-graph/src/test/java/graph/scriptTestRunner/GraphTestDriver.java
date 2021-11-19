@@ -29,7 +29,7 @@ public class GraphTestDriver {
      * String -> Graph: maps the names of graphs to the actual graph
      **/
     // TODO for the student: Uncomment and parameterize the next line correctly:
-    private final Map<String, Graph> graphs = new HashMap<String, Graph>();
+    private final Map<String, Graph<String,String>> graphs = new HashMap<String, Graph<String,String>>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -115,7 +115,7 @@ public class GraphTestDriver {
 
     private void createGraph(String graphName) {
         // TODO Insert your code here.
-        Graph graphName1 = new Graph();
+        Graph<String,String> graphName1 = new Graph<String, String>();
         graphs.put(graphName, graphName1);
         output.println("created graph "+graphName);
         // graphs.put(graphName, ___);
@@ -135,8 +135,8 @@ public class GraphTestDriver {
 
     private void addNode(String graphName, String nodeName) {
         // TODO Insert your code here.
-        Graph a = graphs.get(graphName);
-        a.addNode(new Graph.Node(nodeName));
+        Graph<String,String> a = graphs.get(graphName);
+        a.addNode(new Graph.Node<String,String>(nodeName));
         output.println("added node "+nodeName+" to "+graphName);
         // ___ = graphs.get(graphName);
         // output.println(...);
@@ -158,7 +158,7 @@ public class GraphTestDriver {
     private void addEdge(String graphName, String parentName, String childName,
                          String edgeLabel) {
         // TODO Insert your code here.
-        Graph a = graphs.get(graphName);
+        Graph<String, String> a = graphs.get(graphName);
         a.addEdge(a.getAllNodes().get(parentName),a.getAllNodes().get(childName) , edgeLabel);
         output.println("added edge "+edgeLabel+" from "+parentName+" to "+childName+" in "+graphName);
         // ___ = graphs.get(graphName);
@@ -176,8 +176,8 @@ public class GraphTestDriver {
 
     private void listNodes(String graphName) {
         // TODO Insert your code here.
-        Graph a = graphs.get(graphName);
-        HashMap<String, Graph.Node> listNode = a.getAllNodes();
+        Graph<String, String> a = graphs.get(graphName);
+        HashMap<String, Graph.Node<String, String>> listNode = a.getAllNodes();
         ArrayList<String> result = new ArrayList<>();
         for (String name : listNode.keySet()) {
             result.add(name);
@@ -204,12 +204,12 @@ public class GraphTestDriver {
 
     private void listChildren(String graphName, String parentName) {
         // TODO Insert your code here.
-        Graph a = graphs.get(graphName);
-        HashMap<String, Graph.Node> nodes = a.getAllNodes();
-        Graph.Node node = nodes.get(parentName);
-        ArrayList<Graph.Edge> edges = node.getEdges();
+        Graph<String, String> a = graphs.get(graphName);
+        HashMap<String, Graph.Node<String, String>> nodes = a.getAllNodes();
+        Graph.Node<String, String> node = nodes.get(parentName);
+        ArrayList<Graph.Edge<String, String>> edges = node.getEdges();
         ArrayList<String> names = new ArrayList<>();
-        for (Graph.Edge edge : edges) {
+        for (Graph.Edge<String, String> edge : edges) {
             names.add(edge.getDesNode().getName()+"("+edge.getLabel()+")");
         }
         Collections.sort(names);

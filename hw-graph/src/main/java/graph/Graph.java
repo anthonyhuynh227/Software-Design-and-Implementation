@@ -10,21 +10,21 @@ import java.util.HashMap;
  * each labeled edge connect between two nodes.
  *          the type of Node maintained by this Graph
  */
-public class Graph {
+public class Graph<E,T> {
     //Abstraction Funtion:
     //AF(this) = represents the map with Nodes stored inside this map and connection between them.
     //Nodes contain in 'nodes'. There is no same Node in a graph.
     //If there are no node, then the graph is an empty map.
     //Representation Invariant:
     // nodes != null
-    private HashMap<String, Node> nodes;
+    private HashMap<E, Node<E,T>> nodes;
 
     /**
      * Throws an exception if the representation invariant is violated.
      */
     public void checkRep() {
         assert (nodes != null);
-        for (String String : nodes.keySet()) {
+        for (E String : nodes.keySet()) {
             assert (nodes.get(String) != null);
         }
     }
@@ -40,9 +40,9 @@ public class Graph {
      * @param node the other node to be added.
      * @return true iff node is not in the graph and false if it is already in the graph.
      */
-    public boolean addNode(Node node) {
+    public boolean addNode(Node<E,T> node) {
         if (!this.containNode(node)) {
-            nodes.put(node.getName(),node);
+            nodes.put( node.getName(),node);
             return true;
         } else {
             return false;
@@ -52,7 +52,7 @@ public class Graph {
      *returns a List that contains all the nodes in this graph
      * @return a list that contains all the nodes in graph.
      */
-    public HashMap<String,Node> getAllNodes() {
+    public HashMap<E,Node<E,T>> getAllNodes() {
         return this.nodes;
     }
 
@@ -62,7 +62,7 @@ public class Graph {
      * @param node need to be checked.
      * @return returns whether this graph contains a specified node.
      */
-    public boolean containNode(Node node) {
+    public boolean containNode(Node<E,T> node) {
         return nodes.containsValue(node);
     }
 
@@ -74,8 +74,8 @@ public class Graph {
      * @spec.requires node1 != null and node2 != null
      * @return true if the edge can be added into src node.
      */
-    public boolean addEdge(Node src, Node des, String label) {
-        return src.addEdges(new Edge(des, label));
+    public boolean addEdge(Node<E,T> src, Node<E,T> des, T label) {
+        return src.addEdges(new Edge<E,T>(des,label));
     }
 
     /**
@@ -84,10 +84,10 @@ public class Graph {
      * @spec.requires node != null and nodes contains node.
      * @return returns a list of all Nodes that have their origin is this Node.
      */
-    public ArrayList<Node> children (Node node) {
-        ArrayList<Edge> edges =  node.getEdges();
-        ArrayList<Node> result = new ArrayList<>();
-        for (Edge edge : edges) {
+    public ArrayList<Node<E,T>> children (Node<E,T> node) {
+        ArrayList<Edge<E,T>> edges =  node.getEdges();
+        ArrayList<Node<E,T>> result = new ArrayList<>();
+        for (Edge<E,T> edge : edges) {
             result.add(edge.getDesNode());
         }
         return result;
@@ -99,50 +99,10 @@ public class Graph {
      * @spec.requires node != null
      * @return returns a list of all Edges that have their origin is this Node.
      */
-     public ArrayList<Edge> getEdges(Node node) {
+     public ArrayList<Edge<E,T>> getEdges(Node<E,T> node) {
          return node.getEdges();
      }
 
-    /**
-     * Removes the specified node in this graph and all the edges relates to this node if it is present.
-     * @spec.requires node != null
-     * @param  node to be removed.
-     * @return true iff the set contains the specified element.
-     */
-    public boolean removeNode(Node node) {
-        if (!nodes.containsValue(node)) {
-            return false;
-        } else {
-            nodes.remove(node.getName());
-            for (String node1 : nodes.keySet()) {
-                ArrayList<Edge> edges = nodes.get(node1).getEdges();
-                for (Edge edge : edges) {
-                    if (edge.getDesNode().equals(node)) {
-                        nodes.get(node1).removeEdges(edge);
-                    }
-                }
-            }
-            return true;
-        }
-    }
-
-    /**
-     * Removes the specified edge in this graph and all the edges relates to this node if it is present.
-     * @spec.requires label != nul and node1 != null and node2 != null
-     * removes an edge from node1 to node2 with lablel .
-     * @param src the origin of the edge
-     * @param des the destination of the edge
-     * @param label the label of the edge.
-     * @return true iff the set contains the specified edge.
-     */
-    public boolean removeEdge(Node src, Node des, String label) {
-        if ( nodes.containsValue(src) && nodes.containsValue(des) && src.getEdges().contains(new Edge(des, label))) {
-            src.getEdges().remove(new Edge(des, label));
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
 
@@ -150,9 +110,9 @@ public class Graph {
      * An object that stores value of Node in graph
      * In this case, we are required to store value of Node as String.
      */
-    public static class Node {
-        private String name;
-        private ArrayList<Edge> edgeList;
+    public static class Node<E, T> {
+        private E name;
+        private ArrayList<Edge<E,T>> edgeList;
         //Abstraction Function:
         //Node, p, represents a String object in graph and all the edge outgoing from this object.
         //If there is no Edge in edgeList, then this Node object does not have any edge to other Node.
@@ -164,16 +124,16 @@ public class Graph {
          * @spec.requires name != null
          * @spec.effects construct a node with specified name.
          */
-        public Node(String name) {
+        public Node(E name) {
             this.name = name;
-            edgeList = new ArrayList<>();
+            edgeList = new ArrayList<Edge<E,T>>();
         }
 
         /**
          * Get the value of this Node
          * @return returns the value of this Node
          */
-        public String getName() {
+        public E getName() {
             return this.name;
         }
 
@@ -181,7 +141,7 @@ public class Graph {
          * Get the list of edge with src from this node.
          * @return returns the list of edge
          */
-        public ArrayList<Edge> getEdges() {
+        public ArrayList<Edge<E,T>> getEdges() {
             return this.edgeList;
         }
 
@@ -191,7 +151,7 @@ public class Graph {
          * @spec.effects adds an edge with src from this node
          * @return true if the edge can be added and if it is not already present.
          */
-        public boolean addEdges(Edge edge) {
+        public boolean addEdges(Edge<E,T> edge) {
             if (!edgeList.contains(edge)) {
                 this.edgeList.add(edge);
                 return true;
@@ -206,7 +166,7 @@ public class Graph {
          * @spec.effects removes an edge from this node
          * @return true iff edge can be removed from graph.
          */
-        public boolean removeEdges(Edge edge) {
+        public boolean removeEdges(Edge<E,T> edge) {
             if (edgeList.contains(edge)) {
                 this.edgeList.remove(edge);
                 return true;
@@ -233,7 +193,7 @@ public class Graph {
          */
         public boolean equals(Object obj) {
             if ( obj instanceof Node) {
-                Node node = (Node) obj;
+                Node<?,?> node = (Node<?,?>) obj;
                 return name.equals(node.getName());
             } else {
                 return false;
@@ -246,9 +206,9 @@ public class Graph {
     /**
      * A object that represent the connection between two Node in graph with the labeled value.
      */
-    public static class Edge {
-        private Node desNode;
-        private String label;
+    public static class Edge<E, T> {
+        private Node<E,T> desNode;
+        private T label;
         //Abstraction Funtion:
         //Edge, p, represents the connection between the two Node in graph with a value String label
         //Representation Invariant:
@@ -259,7 +219,7 @@ public class Graph {
          * @spec.effects construct a new labeled edge t between current node and desNode
          * with t.desNode = desNode, t.label = label;
          */
-        public Edge(Node desNode, String label) {
+        public Edge(Node<E,T> desNode, T label) {
             this.desNode = desNode;
             this.label = label;
         }
@@ -268,7 +228,7 @@ public class Graph {
          * Get the destination node of this edge.
          * @return returns the destination node of this edge
          */
-        public Node getDesNode() {
+        public Node<E,T> getDesNode() {
             return this.desNode;
         }
 
@@ -276,7 +236,7 @@ public class Graph {
          * Get the label this edge.
          * @return returns the label this edge
          */
-        public String getLabel() {
+        public T getLabel() {
             return this.label;
         }
 
@@ -298,7 +258,7 @@ public class Graph {
          */
         public boolean equals(Object obj) {
             if (obj instanceof Edge) {
-                Edge edge = (Edge) obj;
+                Edge<?,?> edge = (Edge<?,?>) obj;
                 return this.label.equals(edge.label) && this.desNode.equals(edge.getDesNode());
             } else {
                 return false;

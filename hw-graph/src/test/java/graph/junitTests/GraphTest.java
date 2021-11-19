@@ -13,9 +13,9 @@ public class GraphTest {
 
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
-    private static Graph graph() { return new Graph();}
-    private static Graph.Node node(String s) {return new Graph.Node(s);}
-    private static Graph.Edge edge(Graph.Node node, String e) {return new Graph.Edge(node,e);}
+    private static Graph<String,String> graph() { return new Graph<String, String>();}
+    private static Graph.Node<String, String> node(String s) {return new Graph.Node<String, String>(s);}
+    private static Graph.Edge<String, String> edge(Graph.Node<String, String> node, String e) {return new Graph.Edge<String, String>(node,e);}
 
     @Test
     public void testEmptyGraph() {
@@ -24,14 +24,14 @@ public class GraphTest {
 
     @Test
     public void testAddNode() {
-        Graph graph = new Graph();
+        Graph<String, String> graph = new Graph<String, String>();
         graph.addNode(node("A"));
         assertTrue(graph.containNode(node("A")));
     }
 
     @Test
     public void testAddEdge() {
-        Graph graph = new Graph();
+        Graph<String, String> graph = new Graph<String, String>();
         graph.addNode(node("A"));
         graph.addNode(node("B"));
         graph.addEdge(graph.getAllNodes().get("A"),graph.getAllNodes().get("B"), "This is Edge AB");
@@ -40,7 +40,7 @@ public class GraphTest {
 
     @Test
     public void testChildren() {
-        Graph graph = new Graph();
+        Graph<String, String> graph = new Graph<String, String>();
         graph.addNode(node("A"));
         graph.addNode(node("B"));
         graph.addEdge(graph.getAllNodes().get("A"),graph.getAllNodes().get("B"), "This is Edge AB");
@@ -49,14 +49,14 @@ public class GraphTest {
 
     @Test
     public void testAddDuplicateNode() {
-        Graph graph = new Graph();
+        Graph<String, String> graph = new Graph<String, String>();
         graph.addNode(node("A"));
         assertFalse(graph.addNode(node("A")));
     }
 
     @Test
     public void testAddDuplicateEdge() {
-        Graph graph = new Graph();
+        Graph<String, String> graph = new Graph<String, String>();
         graph.addNode(node("A"));
         graph.addNode(node("B"));
         graph.addEdge(graph.getAllNodes().get("A"),graph.getAllNodes().get("B"), "This is Edge AB");
@@ -67,7 +67,7 @@ public class GraphTest {
     @Test
     //Test add an Edge with same Nodes but different label.
     public void testEdgeWithSameNodes() {
-        Graph graph = new Graph();
+        Graph<String, String> graph = new Graph<String, String>();
         graph.addNode(node("A"));
         graph.addNode(node("B"));
         graph.addEdge(graph.getAllNodes().get("A"),graph.getAllNodes().get("B"), "This is Edge AB");
@@ -78,27 +78,8 @@ public class GraphTest {
     @Test
     // Test an loop edge.
     public void testLoopEdge() {
-        Graph graph = new Graph();
+        Graph<String, String> graph = new Graph<String, String>();
         graph.addNode(node("A"));
         assertTrue(graph.addEdge(graph.getAllNodes().get("A"),graph.getAllNodes().get("A"), "This is Edge AA"));
-    }
-
-    @Test
-    //Test delete a Node
-    public void deleteNode() {
-        Graph graph = new Graph();
-        graph.addNode(node("A"));
-        graph.removeNode(graph.getAllNodes().get("A"));
-        assertTrue(graph.getAllNodes().isEmpty());
-    }
-
-    @Test
-    //Test delete an edge
-    public void deleteEdge() {
-        Graph graph = new Graph();
-        graph.addNode(node("A"));
-        graph.addNode(node("B"));
-        graph.addEdge(graph.getAllNodes().get("A"),graph.getAllNodes().get("B"), "This is Edge AB");
-        assertFalse(graph().removeEdge(graph.getAllNodes().get("A"),graph.getAllNodes().get("B"), "This is Edge AB"));
     }
 }
