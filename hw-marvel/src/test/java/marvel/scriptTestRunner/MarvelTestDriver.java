@@ -22,7 +22,7 @@ import java.util.*;
  * files for testing Graph, the Marvel parser, and your BFS algorithm.
  */
 public class MarvelTestDriver {
-    private final Map<String, Graph> graphs = new HashMap<String, Graph>();
+    private final Map<String, Graph<String, String>> graphs = new HashMap<String, Graph<String, String>>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -117,7 +117,7 @@ public class MarvelTestDriver {
 
     private void createGraph(String graphName) {
         // TODO Insert your code here.
-        Graph graphName1 = new Graph();
+        Graph<String, String> graphName1 = new Graph<String, String>();
         graphs.put(graphName, graphName1);
         output.println("created graph "+graphName);
         // graphs.put(graphName, ___);
@@ -137,8 +137,8 @@ public class MarvelTestDriver {
 
     private void addNode(String graphName, String nodeName) {
         // TODO Insert your code here.
-        Graph a = graphs.get(graphName);
-        a.addNode(new Graph.Node(nodeName));
+        Graph<String, String> a = graphs.get(graphName);
+        a.addNode(new Graph.Node<String, String>(nodeName));
         output.println("added node "+nodeName+" to "+graphName);
         // ___ = graphs.get(graphName);
         // output.println(...);
@@ -160,7 +160,7 @@ public class MarvelTestDriver {
     private void addEdge(String graphName, String parentName, String childName,
                          String edgeLabel) {
         // TODO Insert your code here.
-        Graph a = graphs.get(graphName);
+        Graph<String, String> a = graphs.get(graphName);
         a.addEdge(a.getAllNodes().get(parentName),a.getAllNodes().get(childName) , edgeLabel);
         output.println("added edge "+edgeLabel+" from "+parentName+" to "+childName+" in "+graphName);
         // ___ = graphs.get(graphName);
@@ -178,8 +178,8 @@ public class MarvelTestDriver {
 
     private void listNodes(String graphName) {
         // TODO Insert your code here.
-        Graph a = graphs.get(graphName);
-        HashMap<String, Graph.Node> listNode = a.getAllNodes();
+        Graph<String, String> a = graphs.get(graphName);
+        HashMap<String, Graph.Node<String, String>> listNode = a.getAllNodes();
         ArrayList<String> result = new ArrayList<>();
         for (String name : listNode.keySet()) {
             result.add(name);
@@ -206,12 +206,12 @@ public class MarvelTestDriver {
 
     private void listChildren(String graphName, String parentName) {
         // TODO Insert your code here.
-        Graph a = graphs.get(graphName);
-        HashMap<String, Graph.Node> nodes = a.getAllNodes();
-        Graph.Node node = nodes.get(parentName);
-        ArrayList<Graph.Edge> edges = node.getEdges();
+        Graph<String, String> a = graphs.get(graphName);
+        HashMap<String, Graph.Node<String, String>> nodes = a.getAllNodes();
+        Graph.Node<String, String> node = nodes.get(parentName);
+        ArrayList<Graph.Edge<String, String>> edges = node.getEdges();
         ArrayList<String> names = new ArrayList<>();
-        for (Graph.Edge edge : edges) {
+        for (Graph.Edge<String, String> edge : edges) {
             names.add(edge.getDesNode().getName()+"("+edge.getLabel()+")");
         }
         Collections.sort(names);
@@ -237,7 +237,7 @@ public class MarvelTestDriver {
 
     private void loadGraph(String graphName, String fileName) {
         // TODO Insert your code here.
-        Graph graphName1 = MarvelPaths.marvelGraph(fileName);
+        Graph<String, String> graphName1 = MarvelPaths.marvelGraph(fileName);
         graphs.put(graphName, graphName1);
         output.println("loaded graph "+graphName);
         // ___ = graphs.get(graphName);
@@ -257,7 +257,7 @@ public class MarvelTestDriver {
 
     private void findPath(String graphName, String node_a, String node_b) {
         // TODO Insert your code here.
-        Graph a = graphs.get(graphName);
+        Graph<String, String> a = graphs.get(graphName);
         if (!a.containNode(a.getAllNodes().get(node_a)) && !a.containNode(a.getAllNodes().get(node_b)) ) {
             output.println("unknown: "+node_a);
             output.println("unknown: "+node_b);

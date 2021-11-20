@@ -108,13 +108,13 @@ public class Graph<E,T> {
 
     /**
      * An object that stores value of Node in graph
-     * In this case, we are required to store value of Node as String.
+     * Node can take any type of Object.
      */
     public static class Node<E, T> {
         private E name;
         private ArrayList<Edge<E,T>> edgeList;
         //Abstraction Function:
-        //Node, p, represents a String object in graph and all the edge outgoing from this object.
+        //Node, p, represents an Object in graph and all the edge outgoing from this object.
         //If there is no Edge in edgeList, then this Node object does not have any edge to other Node.
         // Each edge contains in edgeList must be unique in this Node.
         //Representation Invariant:
@@ -160,20 +160,6 @@ public class Graph<E,T> {
             }
         }
 
-        /**
-         * removes an edge from this node
-         * @param edge need to be removed
-         * @spec.effects removes an edge from this node
-         * @return true iff edge can be removed from graph.
-         */
-        public boolean removeEdges(Edge<E,T> edge) {
-            if (edgeList.contains(edge)) {
-                this.edgeList.remove(edge);
-                return true;
-            } else {
-                return false;
-            }
-        }
 
         /**
          * Standard hashCode function.
@@ -205,12 +191,13 @@ public class Graph<E,T> {
 
     /**
      * A object that represent the connection between two Node in graph with the labeled value.
+     * label value can take any type of Object.
      */
     public static class Edge<E, T> {
         private Node<E,T> desNode;
         private T label;
         //Abstraction Funtion:
-        //Edge, p, represents the connection between the two Node in graph with a value String label
+        //Edge, p, represents the connection between the two Node in graph with a value of label
         //Representation Invariant:
         //desNode != null & label != null
         /**

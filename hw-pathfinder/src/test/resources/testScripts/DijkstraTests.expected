@@ -1,0 +1,62 @@
+#find shortestPath with Dijkstra algorithm and some edge cases.
+
+#create graphs
+created graph A
+created graph B
+created graph C
+
+#Add nodes into graphs
+added node a1 to A
+added node b1 to B
+added node b2 to B
+added node c1 to C
+added node c2 to C
+added node c3 to C
+
+#Add edges to graphs
+added edge 1.000 from b1 to b2 in B
+added edge 3.000 from b2 to b1 in B
+added edge 5.000 from c1 to c2 in C
+added edge 7.000 from c2 to c3 in C
+added edge 10.000 from c1 to c3 in C
+
+#Print all nodes in the graph
+A contains: a1
+B contains: b1 b2
+C contains: c1 c2 c3
+
+#Print all the child nodes with outgoing edge
+the children of a1 in A are:
+the children of b1 in B are: b2(1.000)
+the children of b2 in B are: b1(3.000)
+the children of c1 in C are: c2(5.000) c3(10.000)
+the children of c2 in C are: c3(7.000)
+the children of c3 in C are:
+
+#Test one node is not in graph
+unknown: a2
+
+#Test two nodes are not in graph
+unknown: a2
+unknown: a3
+
+#Test path exist in graph
+path from b1 to b2:
+b1 to b2 with weight 1.000
+total cost: 1.000
+
+path from b2 to b1:
+b2 to b1 with weight 3.000
+total cost: 3.000
+
+#Test path from a node to itself
+path from b1 to b1:
+
+#Test no path in graph
+path from c3 to c1:
+no path found
+
+#Test shortest path
+path from c1 to c3:
+c1 to c3 with weight 10.000
+total cost: 10.000

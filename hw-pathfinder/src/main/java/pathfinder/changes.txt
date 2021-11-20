@@ -1,2 +1,3 @@
 Briefly list any changes you made to your graph class during hw-pathfinder, and why you made those changes.
+I deleted the removeEdges method and removeNode method in Graph since we don't need these methods for our homework.
 

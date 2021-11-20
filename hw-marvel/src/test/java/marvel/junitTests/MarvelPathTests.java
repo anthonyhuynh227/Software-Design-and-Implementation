@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class MarvelPathTests {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(30); // 30 seconds max per method tested
-    Graph marvelGraph = MarvelPaths.marvelGraph("csStudent.csv");
+    Graph<String, String> marvelGraph = MarvelPaths.marvelGraph("csStudent.csv");
 
     @Test
     public void testNoCharInGraph() {

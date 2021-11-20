@@ -6,13 +6,13 @@ import java.util.*;
 
 public class MarvelPaths {
 
-    public static Graph marvelGraph(String csvFile) {
+    public static Graph<String, String> marvelGraph(String csvFile) {
         ArrayList<ArrayList<String>> resultFile = MarvelParser.parseData(csvFile);
-        Graph Marvel = new Graph();
+        Graph<String, String> Marvel = new Graph<String, String>();
         // adds all the character into graph
         for (int i = 0; i < resultFile.size(); i++) {
             ArrayList<String> eachLine = resultFile.get(i);
-            Marvel.addNode(new Graph.Node(eachLine.get(0)));
+            Marvel.addNode(new Graph.Node<String, String>(eachLine.get(0)));
         }
         // creates a HashMap where each key movie contains a set of character in that movie.
         HashMap<String, ArrayList<String>> listMovie = new HashMap<>();
@@ -38,7 +38,7 @@ public class MarvelPaths {
         return Marvel;
 
     }
-    public static ArrayList<ArrayList<String>> shortestPath(Graph Marvel, String start, String dest){
+    public static ArrayList<ArrayList<String>> shortestPath(Graph<String, String> Marvel, String start, String dest){
         LinkedList<String> queue = new LinkedList<>();
         HashMap<String, ArrayList<ArrayList<String>>> map = new HashMap<>();
         queue.add(start);
@@ -48,10 +48,10 @@ public class MarvelPaths {
             if (n.equals(dest)) {
                 return map.get(n);
             }
-            ArrayList<Graph.Edge> edges = Marvel.getEdges(Marvel.getAllNodes().get(n));
+            ArrayList<Graph.Edge<String, String>> edges = Marvel.getEdges(Marvel.getAllNodes().get(n));
             Collections.sort(edges, (s1,s2) -> s1.getDesNode().getName().equals(s2.getDesNode().getName())
                         ? s1.getLabel().compareTo(s2.getLabel()) : s1.getDesNode().getName().compareTo(s2.getDesNode().getName()));
-            for ( Graph.Edge edge : edges) {
+            for ( Graph.Edge<String, String> edge : edges) {
                 String temp = edge.getDesNode().getName();
                 if (!map.containsKey(temp)) {
                     ArrayList<String> temPath = new ArrayList<>();
@@ -72,7 +72,7 @@ public class MarvelPaths {
         return new ArrayList<>();
     }
     public static void main(String[] args) {
-        Graph graph = MarvelPaths.marvelGraph("csStudent.csv");
+        Graph<String, String> graph = MarvelPaths.marvelGraph("csStudent.csv");
         Scanner console = new Scanner(System.in);
         boolean userInputCorrect = false;
         String start = null;
