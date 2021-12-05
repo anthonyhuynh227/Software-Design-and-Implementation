@@ -9,10 +9,11 @@
  * author.
  */
 
-import React, {Component} from 'react';
+import React, {Component, MouseEventHandler} from 'react';
 
 interface EdgeListProps {
-    onChange(edges: any): void;  // called when a new edge list is ready
+    value:string;
+    onChange(edges: string): void;  // called when a new edge list is ready
                                  // once you decide how you want to communicate the edges to the App, you should
                                  // change the type of edges so it isn't `any`
 }
@@ -22,18 +23,30 @@ interface EdgeListProps {
  * Also contains the buttons that the user will use to interact with the app.
  */
 class EdgeList extends Component<EdgeListProps> {
+
+    onInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const newEdge:string = event.target.value;
+     this.props.onChange(newEdge);
+    };
+
+
+    handleClear = () => {
+        this.props.onChange("");
+    }
+
+
     render() {
         return (
             <div id="edge-list">
                 Edges <br/>
                 <textarea
+                    value={this.props.value}
+                    onChange={this.onInputChange}
                     rows={5}
                     cols={30}
-                    onChange={() => {console.log('textarea onChange was called');}}
-                    value={"I'm stuck..."}
                 /> <br/>
-                <button onClick={() => {console.log('Draw onClick was called');}}>Draw</button>
-                <button onClick={() => {console.log('Clear onClick was called');}}>Clear</button>
+                <button onClick={ () => this.props.onChange(this.props.value)}>Draw</button>
+                <button onClick={this.handleClear}>Clear</button>
             </div>
         );
     }

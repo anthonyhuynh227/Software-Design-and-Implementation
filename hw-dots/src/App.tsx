@@ -19,6 +19,8 @@ import "./App.css";
 
 interface AppState {
     gridSize: number;  // size of the grid to display
+    edgeString: string;
+    edges: [number, number, number, number,string][]
 }
 
 class App extends Component<{}, AppState> { // <- {} means no props.
@@ -27,6 +29,8 @@ class App extends Component<{}, AppState> { // <- {} means no props.
         super(props);
         this.state = {
             gridSize: 4,
+            edgeString: "",
+            edges: []
         };
     }
 
@@ -36,14 +40,33 @@ class App extends Component<{}, AppState> { // <- {} means no props.
         });
     };
 
+    updateEdgeString = (newEdge: string) => {
+        const arrayLine = newEdge.split('\n');
+        let map:[number, number, number, number, string][] = []
+        for (let line of arrayLine) {
+            let a:any[] = []
+            const part = line.split(' ');
+            for (let element of part) {
+                const e = element.split(',');
+                a.push(e);
+            }
+            map.push([parseInt(a[0]),parseInt(a[1]),parseInt(a[2]), parseInt(a[3]),a[4]]);
+        }
+        this.setState({
+            edgeString: newEdge,
+            edges:map
+        });
+    };
+
+
     render() {
         const canvas_size = 500;
         return (
             <div>
                 <p id="app-title">Connect the Dots!</p>
                 <GridSizePicker value={this.state.gridSize.toString()} onChange={this.updateGridSize}/>
-                <Grid size={this.state.gridSize} width={canvas_size} height={canvas_size}/>
-                <EdgeList onChange={(value) => {console.log("EdgeList onChange", value)}}/>
+                <Grid edges={this.state.edges} size={this.state.gridSize} width={canvas_size} height={canvas_size}/>
+                <EdgeList value={this.state.edgeString}  onChange={this.updateEdgeString}/>
             </div>
 
         );

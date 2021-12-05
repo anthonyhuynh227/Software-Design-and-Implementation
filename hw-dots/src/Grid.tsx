@@ -10,11 +10,13 @@
  */
 
 import React, {Component} from 'react';
+import {createCipher} from "crypto";
 
 interface GridProps {
     size: number;    // size of the grid to display
     width: number;   // width of the canvas on which to draw
     height: number;  // height of the canvas on which to draw
+    edges: [number, number, number, number, string][];
 }
 
 interface GridState {
@@ -86,7 +88,13 @@ class Grid extends Component<GridProps, GridState> {
         for (let coordinate of coordinates) {
             this.drawCircle(ctx, coordinate);
         }
+
+        // Draw all edge.
+        for (let edge of this.props.edges) {
+            this.drawEdge(ctx,edge);
+        }
     };
+
 
     /**
      * Returns an array of coordinate pairs that represent all the points where grid dots should
@@ -94,12 +102,13 @@ class Grid extends Component<GridProps, GridState> {
      */
     getCoordinates = (): [number, number][] => {
         // A hardcoded 4x4 grid. Probably not going to work when we change the grid size...
-        return [
-            [100, 100], [100, 200], [100, 300], [100, 400],
-            [200, 100], [200, 200], [200, 300], [200, 400],
-            [300, 100], [300, 200], [300, 300], [300, 400],
-            [400, 100], [400, 200], [400, 300], [400, 400]
-        ];
+        let map:[number, number][] = []
+        for (let x = 1; x <= this.props.size;x++) {
+            for (let y = 1; y <= this.props.size; y++) {
+                map.push([x*this.props.height/(this.props.size+1),y*this.props.width/(this.props.size+1)]);
+            }
+        }
+        return map;
     };
 
     drawCircle = (ctx: CanvasRenderingContext2D, coordinate: [number, number]) => {
@@ -112,11 +121,20 @@ class Grid extends Component<GridProps, GridState> {
         ctx.fill();
     };
 
+     drawEdge = (ctx: CanvasRenderingContext2D, coordinate: [number, number, number, number, string]) => {
+        ctx.fillStyle = coordinate[4];
+        ctx.beginPath();
+        ctx.moveTo(coordinate[0], coordinate[1]);
+        ctx.lineTo(coordinate[2], coordinate[3]);
+        ctx.stroke();
+        ctx.fill();
+     };
+
     render() {
         return (
             <div id="grid">
                 <canvas ref={this.canvasReference} width={this.props.width} height={this.props.height}/>
-                <p>Current Grid Size: 4</p>
+                <p>Current Grid Size: {this.props.size}</p>
             </div>
         );
     }
