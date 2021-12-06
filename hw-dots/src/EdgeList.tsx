@@ -16,6 +16,7 @@ interface EdgeListProps {
     onChange(edges: string): void;  // called when a new edge list is ready
                                  // once you decide how you want to communicate the edges to the App, you should
                                  // change the type of edges so it isn't `any`
+    onDraw(edges:string): any;
 }
 
 /**
@@ -45,7 +46,7 @@ class EdgeList extends Component<EdgeListProps> {
                     rows={5}
                     cols={30}
                 /> <br/>
-                <button onClick={ () => this.props.onChange(this.props.value)}>Draw</button>
+                <button onClick={ () => this.props.onDraw(this.props.value)}>Draw</button>
                 <button onClick={this.handleClear}>Clear</button>
             </div>
         );

@@ -90,7 +90,8 @@ class Grid extends Component<GridProps, GridState> {
         }
 
         // Draw all edge.
-        for (let edge of this.props.edges) {
+        const edges = this.getEdges();
+        for (let edge of edges) {
             this.drawEdge(ctx,edge);
         }
     };
@@ -105,7 +106,7 @@ class Grid extends Component<GridProps, GridState> {
         let map:[number, number][] = []
         for (let x = 1; x <= this.props.size;x++) {
             for (let y = 1; y <= this.props.size; y++) {
-                map.push([x*this.props.height/(this.props.size+1),y*this.props.width/(this.props.size+1)]);
+                map.push([x*this.props.width/(this.props.size+1),y*this.props.height/(this.props.size+1)]);
             }
         }
         return map;
@@ -121,11 +122,15 @@ class Grid extends Component<GridProps, GridState> {
         ctx.fill();
     };
 
+    getEdges = (): [number, number, number, number, string][] => {
+        return this.props.edges;
+    }
      drawEdge = (ctx: CanvasRenderingContext2D, coordinate: [number, number, number, number, string]) => {
-        ctx.fillStyle = coordinate[4];
         ctx.beginPath();
-        ctx.moveTo(coordinate[0], coordinate[1]);
-        ctx.lineTo(coordinate[2], coordinate[3]);
+        ctx.moveTo(coordinate[0]*this.props.width/(this.props.size+1), coordinate[1]*this.props.height/(this.props.size+1));
+        ctx.lineTo(coordinate[2]*this.props.width/(this.props.size+1), coordinate[3]*this.props.height/(this.props.size+1));
+        ctx.strokeStyle = coordinate[4];
+        ctx.lineWidth = 3;
         ctx.stroke();
         ctx.fill();
      };
