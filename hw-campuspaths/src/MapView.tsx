@@ -15,8 +15,11 @@ import "./MapView.css";
 interface MapViewState {
     backgroundImage: HTMLImageElement | null;
 }
+interface MapViewProps {
+    path: [any, any, any, any][]; // path from start building to destination building to display
+}
 
-class MapView extends Component<{}, MapViewState> {
+class MapView extends Component<MapViewProps, MapViewState> {
 
     // NOTE:
     // This component is a suggestion for you to use, if you would like to.
@@ -27,7 +30,7 @@ class MapView extends Component<{}, MapViewState> {
 
     canvas: React.RefObject<HTMLCanvasElement>;
 
-    constructor(props: {}) {
+    constructor(props: MapViewProps) {
         super(props);
         this.state = {
             backgroundImage: null
@@ -37,10 +40,13 @@ class MapView extends Component<{}, MapViewState> {
 
     componentDidMount() {
         // Might want to do something here?
+        this.fetchAndSaveImage();
+        this.drawBackgroundImage();
     }
 
     componentDidUpdate() {
         // Might want something here too...
+        this.drawBackgroundImage();
     }
 
     fetchAndSaveImage() {
@@ -70,12 +76,34 @@ class MapView extends Component<{}, MapViewState> {
             canvas.height = this.state.backgroundImage.height;
             ctx.drawImage(this.state.backgroundImage, 0, 0);
         }
+        //Draw path from start point to end point.
+        const paths = this.props.path;
+        for (let path of paths) {
+            this.drawEdge(ctx, path);
+        }
     }
+
+
+
+
+    drawEdge = (ctx: CanvasRenderingContext2D, coordinate: [any, any, any, any]) => {
+        ctx.beginPath();
+        ctx.moveTo(Number(coordinate[0]), Number(coordinate[1]));
+        ctx.lineTo(Number(coordinate[2]), Number(coordinate[3]));
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 10;
+        ctx.stroke();
+        ctx.fill();
+    };
+
+
 
     render() {
         return (
-            <canvas ref={this.canvas}/>
-        )
+            <div id="map-view">
+                <canvas ref={this.canvas}/>
+            </div>
+        );
     }
 }
 
